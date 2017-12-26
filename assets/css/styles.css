@@ -48,12 +48,7 @@ article{
 .stock_marquee {
     border: 1px solid #D5D5D5;
 }
-.marquee {
-    width: 100%;
-    margin: 0 auto;
-    font-size: 1em;
-    overflow: hidden;
-}
+
 /*holder*/
 
 .holder{
@@ -135,4 +130,6 @@ h4.panel-title.title a {
     background: #EFEFEF;
     margin-bottom: 1em;
 }
+
+
 

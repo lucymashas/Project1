@@ -22,9 +22,7 @@
 	<div class="header_top">test</div>
 	<div class="banner holder"></div>
 
-	<div class="stock_marquee">
-		<div data-speed="10" class="marquee">
-			<div style="width: 100000px; margin-left: 0px; animation: marqueeAnimation-89843960 4.15056s linear 0s infinite running;" class="js-marquee-wrapper">
+	<!-- <div class="stock_marquee">
 			<div class="js-marquee" style="margin-right: 100px; float: left;">
 				<ul>
 					<li><a href="single.html">Scrolling Marquee on some info...<span>\</span></a></li>
@@ -37,11 +35,41 @@
 				<li><a href="single.html">Market analysis two</a></li>
 			</ul>
 			</div>
-			</div>
-		</div>
-	</div>
+	</div> -->
 <section class="row center">
 	<article class="col-xs-5 col-md-5">
+		<button class="btn btn-success" data-toggle="modal" data-target="#modall">Add Stock Information</button>
+		<div class="modal fade" id="modall">
+		    <div class="modal-dialog">
+		    	<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" data-dismiss="modal">&times;</button>
+						<h4>Add Stock Information</h4>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label for="stockname">Stock Name</label>
+								<input type="text" class="form-control input-lg"></input>
+							</div>
+							<div class="form-group">
+								<label for="pricepaid">Price Paid</label>
+								<input type="text" class="form-control input-lg"></input>
+							</div>
+							<div class="form-group">
+								<label for="sharespurchased">Shares Purchased</label>
+								<input type="text" class="form-control input-lg"></input>
+							</div>
+							
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-default" data-dismiss="modal">CANCEL</button>
+						<button class="btn btn-default" data-dismiss="modal">ADD</button>
+					</div>
+				</div>
+			</div>
+		</div> <!-- end of modal -->
 			<div class="investmenttotal">$5000.00</div>
 			<div class="panel-group" id="accordion" aria-multiselectable="true">	
 				<div class="panel panel-default">
@@ -92,9 +120,6 @@
 	</aside>
 </section>
 </container>
-
-
- 
 
  <!-- JavaScript -->
  <script src="./assets/js/api.js"></script>
