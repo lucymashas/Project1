@@ -28,4 +28,5 @@ function getStocks(q){
        });
     }
 
+
 getStocks(symbol);
