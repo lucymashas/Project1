@@ -1,19 +1,34 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stock Management Portfolio</title>
-  <link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  	<meta charset="utf-8">
+  	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<title>Stock Management Portfolio</title>
+  	<link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
+ 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
- <!-- JQuery link   -->
-<script src="https://code.jquery.com/jquery.js"> </script>
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+ 	<!-- JQuery link   -->
+	<script src="https://code.jquery.com/jquery.js"> </script>
+ 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-  <link rel="stylesheet" type="text/css" href="./assets/css/styles.css">
+   <link rel="stylesheet" type="text/css" href="./assets/css/styles.css">
 
+   <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+   <script>
+ // Initialize Firebase
+ var config = {
+   apiKey: "AIzaSyDYtGuQAly920C-DqosCvmxDRrm5eVnf9Y",
+   authDomain: "stock-93e89.firebaseapp.com",
+   databaseURL: "https://stock-93e89.firebaseio.com",
+   projectId: "stock-93e89",
+   storageBucket: "stock-93e89.appspot.com",
+   messagingSenderId: "883953047486"
+ };
+ firebase.initializeApp(config);
+ var database = firebase.database();
+</script>
  
 </head>
 <body>
@@ -37,7 +52,7 @@
 			</div>
 	</div> -->
 <section class="row center">
-	<article class="col-xs-5 col-md-5">
+	<article class="col-xs-7 col-md-7">
 		<button class="btn btn-success" data-toggle="modal" data-target="#modall">Add Stock Information</button>
 		<div class="modal fade" id="modall">
 		    <div class="modal-dialog">
@@ -71,49 +86,9 @@
 			</div>
 		</div> <!-- end of modal -->
 			<div class="investmenttotal">$5000.00</div>
-			<div class="panel-group" id="accordion" aria-multiselectable="true">	
-				<div class="panel panel-default">
-					<div class="panel-heading" id="headingOne">
-						<h4 class="panel-title title">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Stock One</a>
-							
-						</h4>
-					</div>
-					<div class="collapse panel-collapse" id="collapseOne">
-						<div class="panel-body panel_text">
-							Ut quis venenatis neque, sit amet sagittis lorem. Quisque dapibus dui non urna suscipit ultricies.
-						</div>
-					</div>
-				</div> <!-- end panel one -->
-
-				<div class="panel panel-default">
-					<div class="panel-heading" id="headingTwo">
-						<h4 class="panel-title title">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Stock Two</a>
-							
-						</h4>
-					</div>
-					<div class="collapse panel-collapse" id="collapseTwo">
-						<div class="panel-body panel_text">Ut quis venenatis neque, sit amet sagittis lorem. Quisque dapibus dui non urna suscipit ultricies.
-						</div>
-					</div>
-				</div> <!-- //end panel two -->
-					
-				<div class="panel panel-default">
-					<div class="panel-heading" id="headingThree">
-						<h4 class="panel-title title">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Stock Three</a>
-
-						</h4>
-					</div>
-					<div class="collapse panel-collapse" id="collapseThree">
-						<div class="panel-body panel_text">Ut quis venenatis neque, sit amet sagittis lorem. Quisque dapibus dui non urna suscipit ultricies.
-						</div>
-					</div>
-				</div> <!-- end of panel three -->
-			</div> <!-- end of panel group -->
+			<div id="stage"></div>
 	</article>
-	<aside class="col-xs-6 col-md-6 border">
+	<aside class="col-xs-5 col-md-5 border">
 			<div class="news_chart"><h3>Latest News Information</h3>
 				
 			</div>
@@ -122,6 +97,7 @@
 </container>
 
  <!-- JavaScript -->
+ <script type="text/javascript" src="./assets/js/stockfirebase.js"></script>
  <script src="./assets/js/api.js"></script>
 
 </body>
