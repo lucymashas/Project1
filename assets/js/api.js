@@ -17,7 +17,7 @@ function getStocks(q){
            	 					 <p class="spacing">${response[i].summary} <a href="${response[i].url}"> more</a>
            	 					 <span>Source:  ${response[i].source}&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;${response[i].datetime}</span></p>
            	 					 </div>`
-           	 $(".news_chart").append(newstemplate);
+           	 $(".news_feed").append(newstemplate);
            }
            // symbolNews.dateTime = response.AAPL.news[0].datetime;
            // console.log(symbolNews.datetime);
