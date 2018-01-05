@@ -1,11 +1,20 @@
 $(document).ready(function() {
-      
 //var nameSearch = 'american';
-//symbolSearch(nameSearch)
+    function resetform(){
+        $(this).parent().find("input").val('');
+        $("#searchButton").show();
+        $("#cancelBtn").hide();
+        $("#lookup").empty();
+        $("#addinfo").find('input:text').val('');
+        $("#forminfo").trigger("reset");
+        disableform();
+    }
     function disableform(){
+        $("#forminfo").trigger("reset");
         $("#addinfo input").attr("disabled", "disabled");
         $("#btn button").attr("disabled", "disabled");
-    }
+        $("#cancelBtn").hide();
+    }    
     function symbolSearch(nameSearch) {
         lookupResults = "";
         // http works locally, https doesn't work anywhere
@@ -47,15 +56,14 @@ $(document).ready(function() {
                 $("#stockName").val(optionText.split('-')[0]);
                 $("#lookup").empty();
             })
-             // if user click on reset icon, clear text field
+             // if user click on the search reset icon, clear text field
                 $("#cancelBtn").click(function(){
                     $(this).parent().find("input").val('');
                     $("#searchButton").show();
                     $("#cancelBtn").hide();
                     $("#lookup").empty();
-                    $("#addinfo").find('input:text').val('');
+                    $("#forminfo").trigger("reset");
                     disableform();
-                    
                 });
          
         }).fail(function(err) {
@@ -63,14 +71,12 @@ $(document).ready(function() {
             throw err;
         });
     }
-    //Search onClick
+     //Search onClick
         disableform();
-        $("#cancelBtn").hide();
         $("#searchButton").on("click", function(event) {
             event.preventDefault();
             nameSearch = $("#getName").val().trim();
             symbolSearch(nameSearch);
         })
-
         
 });
