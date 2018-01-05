@@ -11,6 +11,7 @@ $(document).ready(function() {
 		var currPrice = "";
 		var currExt   = "";
 
+
 		// the following will set up the classes needed for the accordion panel
 		accordionWrapper = $("<div>");
 			accordionWrapper.addClass("panel-group");
@@ -66,7 +67,8 @@ $(document).ready(function() {
 			//            	"</div>" 
 			stockInfo =	
 							// "<div class='col-xs-1'>"+trans+"</div> " +
-			          			"<tr><td>"+date+"</td> " +
+			          			"<tr><td>"+trans+"</td> " +
+			          			"<td>"+date+"</td> " +
 			               		"<td>"+shares+"</td> " +
 			               		"<td>"+price+"</td> " +
 			               		"<td>"+ext+"</td> " +
@@ -138,18 +140,17 @@ $(document).ready(function() {
 				//                			"<div class='col-xs-1 text-right'><strong>Profit</strong></div> " +
 				//                		"</div>" +
 				// 				"</div>"
-				detailHeader= 								
-					                "<table class='table table-striped "+symbol+"con'>"+
-					                "<caption>Transaction Type:  </caption>"+
-					                "<thead>"+
-					                "<tr><th>Transaction</th>"+
-					                "<th>Shares</th>"+
-					                "<th>Price</th>"+
-					                "<th>Ext</th>"+
-					                "<th>Curr</th>"+
-					                "<th>Profit</th>"+
-					                "</thead>" +
-					                "<tbody>"
+				detailHeader= "<table class='table table-striped table-condensed " +symbol+"con'>"+
+					            "<thead>"+
+					            "<tr><th>Type</th>"+
+					            "<th>Date</th>"+
+					            "<th>Shares</th>"+
+					            "<th>Price</th>"+
+					            "<th>Ext</th>"+
+					            "<th>Curr</th>"+
+					            "<th>Profit</th>"+
+					            "</thead>" +
+					            "<tbody>"
 				               
 				$("#text"+symbol).append(detailHeader)
 			}
@@ -158,4 +159,8 @@ $(document).ready(function() {
 				newFormat = number.toLocaleString('en',{minimumFractionDigits:2})
 				return newFormat;
 			}
+
+		
+
+		
 });
