@@ -18,7 +18,7 @@ $(document).ready(function() {
     function symbolSearch(nameSearch) {
         lookupResults = "";
         // http works locally, https doesn't work anywhere
-        var symbolUrl = "https://dev.markitondemand.com/Api/v2/Lookup/jsonp";
+        var symbolUrl = "http://dev.markitondemand.com/Api/v2/Lookup/jsonp";
         // var symbolUrl = "https://dev.markitondemand.com/Api/v2/Lookup/jsonp";
         symbolUrl += '?' + $.param({
             'input': nameSearch
