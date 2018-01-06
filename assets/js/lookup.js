@@ -36,7 +36,7 @@ $(document).ready(function() {
             opt.attr("id","lookupID")
             opt.attr("class","form-control")
             $('#lookup').append(opt)
-            
+    
             for(i=0; i < lookupData.length; i++) {
               opt = $('<option>');
               opt.attr('value',lookupData[i].Symbol);
