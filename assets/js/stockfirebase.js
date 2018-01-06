@@ -200,8 +200,9 @@ $(document).ready(function() {
 			function updateTables(latestPrice, q, name) {
 				// symLoc = $.inArray(q,tickerList);
 				// if(symLoc == '-1') {
+					pos = tickerList.length
 					tickerList.push(q);
-					currentPrice.push(latestPrice);
+					currentPrice.push(formatNumber(latestPrice));
 					companyNames.push(name);
 					companyShares.push(0);
 					symHead   = q+"head";
@@ -213,7 +214,7 @@ $(document).ready(function() {
 					          "<tr>" +
 					          "<td style='width:100px'>"+q+"</td>" +
 					          "<td style='width:300px'>"+name+"</td>" +
-					          "<td style='width:200px'>Current Price  $"+fmtPrice+"</td>" +
+					          "<td style='width:200px'>Current Price  $"+currentPrice[pos]+"</td>" +
 					          "<td class='total"+q+"' style='width:200px'></td>" +
 					          "</tr>" +
 					          "</table>"
