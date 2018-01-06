@@ -77,11 +77,11 @@ $(document).ready(function() {
 			stockInfo =	"<div class='row "+lineclass+"'> " +
 							"<div class='col-xs-1'>"+trans+"</div> " +
 			          			"<div class='col-xs-1'>"+date+"</div> " +
-			               		"<div class='col-xs-1 text-right'>"+shares+"</div> " +
-			               		"<div class='col-xs-1 text-right'>"+fmtPrice+"</div> " +
-			               		"<div class='col-xs-1 text-right'>"+fmtExt+"</div> " +
-			              		"<div class='col-xs-1 text-right'>"+fmtCurrExt+"</div> " +
-			            		"<div class='col-xs-1 text-right "+minusSign+ "'>"+fmProfit+"</div> " +
+			               		"<div class='col-xs-2 text-right'>"+shares+"</div> " +
+			               		"<div class='col-xs-2 text-right'>"+fmtPrice+"</div> " +
+			               		"<div class='col-xs-2 text-right'>"+fmtExt+"</div> " +
+			              		"<div class='col-xs-2 text-right'>"+fmtCurrExt+"</div> " +
+			            		"<div class='col-xs-2 text-right "+minusSign+ "'>"+fmProfit+"</div> " +
 			           	"</div>" 
 
 			$("."+symbol+"con").append(stockInfo)
@@ -150,11 +150,11 @@ $(document).ready(function() {
 									"<div class='row'> " +
 										"<div class='col-xs-1'><strong>Trans</strong></div> " +
 				               			"<div class='col-xs-1'><strong>Date</strong></div> " +
-				               			"<div class='col-xs-1 text-right'><strong>Shares</strong></div> " +
-				               			"<div class='col-xs-1 text-right'><strong>Price</strong></div> " +
-				               			"<div class='col-xs-1 text-right'><strong>Ext$</strong></div> " +
-				               			"<div class='col-xs-1 text-right'><strong>Curr$</strong></div> " +
-				               			"<div class='col-xs-1 text-right'><strong>Profit</strong></div> " +
+				               			"<div class='col-xs-2 text-right'><strong>Shares</strong></div> " +
+				               			"<div class='col-xs-2 text-right'><strong>Price</strong></div> " +
+				               			"<div class='col-xs-2 text-right'><strong>Ext$</strong></div> " +
+				               			"<div class='col-xs-2 text-right'><strong>Curr$</strong></div> " +
+				               			"<div class='col-xs-2 text-right'><strong>Profit</strong></div> " +
 				               		"</div>" +
 								"</div>"
 
