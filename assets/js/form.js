@@ -26,7 +26,7 @@ $(document).ready(function(){
 		var ext = price * shares;
 		$("#forminfo").trigger("reset");
 		$("#addinfo").trigger("reset");
-		$('#modal').modal('toggle');
+		$('#modall').modal('toggle');
 
 		//Console Log
 		console.log("Symbol: "+symbol);
