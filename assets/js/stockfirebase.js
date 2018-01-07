@@ -4,7 +4,8 @@ $(document).ready(function() {
 		var tickerList     = [];
 		var currentPrice   = [];
 		var companyNames   = [];
-		var companyShares  = []
+		var companyShares  = [];
+		var companyCash	   = [];
 		var portfolioValue = 0;
 		var symHead        = "";
 		var symDetail      = "";
@@ -13,12 +14,14 @@ $(document).ready(function() {
 		var currPrice      = "";
 		var currExt        = "";
 		var latestPrice    = "";
+		var purExt         = "";
+		var cashExt 		= 0;
+		var totCashExt		= 0;
 
 		// the following will set up the classes needed for the accordion panel
 		accordionWrapper = $("<div>");
 			accordionWrapper.addClass("panel-group");
 			accordionWrapper.attr("id","accordion");
-			//accordionWrapper.attr("role","tablist");
 			accordionWrapper.attr("aria-multiselectable","true");
 		$('#stage').append(accordionWrapper);
 
@@ -26,29 +29,32 @@ $(document).ready(function() {
 	    database.ref().on("child_added", function(childSnapshot) {
 
             // Store everything into a variable.
-            var symbol  = childSnapshot.val().symbol;
-            var name    = childSnapshot.val().name;
-            var shares  = childSnapshot.val().shares;
-            var price   = childSnapshot.val().price;
-            var ext     = childSnapshot.val().ext;
-            var date    = childSnapshot.val().date;
-            var trans   = childSnapshot.val().trans;
+            var symbol  	= childSnapshot.val().symbol;
+            var name    	= childSnapshot.val().name;
+            var purShares  	= parseInt(childSnapshot.val().shares);
+            var purPrice   	= formatNumber(childSnapshot.val().price);
+            var purExt     	= formatNumber(childSnapshot.val().ext);
+            var rawPurExt   = childSnapshot.val().ext
+            var date    	= childSnapshot.val().date;
+            var trans   	= childSnapshot.val().trans;
+            if(trans == 'sell') {
+            	rawPurExt = (rawPurExt * -1);
+            }
 
-            fmtPrice 	= formatNumber(price);
-            fmtExt 	    = formatNumber(ext)
- 
            	// get current stock prices and news
            	symLoc = $.inArray(symbol,tickerList);
 			if(symLoc == '-1') {
            		getStocks(symbol);
            	}
 
-           	symLoc 		= $.inArray(symbol,tickerList);
-            currPrice 	= currentPrice[symLoc];
-            currExt		= (currPrice * shares);
-            fmtCurrExt  = formatNumber(currExt);
+           	symLoc 			= $.inArray(symbol,tickerList);
+            rawCurrPrice 	= parseInt(currentPrice[symLoc]);
+            currExt			= formatNumber((rawCurrPrice * purShares));
+            rawCurrExt  	= parseInt(currExt);
+   
 
-            profit = currExt - ext;
+            profit = ((rawCurrPrice*purShares) - rawPurExt);
+            profit = formatNumber(profit)
 
             // the following initialize a class to print negative numbers red
             minusSign = "";
@@ -56,32 +62,35 @@ $(document).ready(function() {
             	minusSign = 'sell'
             }
 
-           	fmProfit =formatNumber(profit);
-
+            totStockValue = 0;
             if(trans == 'buy') {
             	// record total shares purchase for this symbol - symLoc represents the
             	// ticker symbol location within the tickerList array
-            	companyShares[symLoc] += parseInt(shares);
+            	companyShares[symLoc] += parseInt(purShares);
             	lineclass = "";
-               	totStockValue = (currentPrice[symLoc] * companyShares[symLoc])               	
-                fmttotStockValue = formatNumber(totStockValue);
-                $(".total"+symbol).text("Stock Value  $"+fmttotStockValue)
-                portfolioCalc()
-            } else {      // this is a sell transaction
-            	lineclass = 'sell';
-            	fmtCurrExt = "";
-            	currPrice = "";
-            	fmProfit = "";
+               	totStockValue += (currentPrice[symLoc] * companyShares[symLoc]);
+               	totStockValue += companyCash[symLoc]              	
+            } else {      // this is a sell transaction - do show current price or profit
+            	 lineclass = 'sell';
+            	 currExt = "";
+         	     currPrice = "";
+            	 profit = "";
+            	 companyCash[symLoc] += rawPurExt;
+            	 totStockValue += companyCash[symLoc]
+            	 console.log(totStockValue)          	 
             }
+                
+            $(".total"+symbol).text("Stock Value  $"+formatNumber(totStockValue));
+			portfolioCalc();  // update portfolio numbers
 
 			stockInfo =	"<div class='row "+lineclass+"'> " +
 							"<div class='col-xs-1'>"+trans+"</div> " +
 			          			"<div class='col-xs-1'>"+date+"</div> " +
-			               		"<div class='col-xs-2 text-right'>"+shares+"</div> " +
-			               		"<div class='col-xs-2 text-right'>"+fmtPrice+"</div> " +
-			               		"<div class='col-xs-2 text-right'>"+fmtExt+"</div> " +
-			              		"<div class='col-xs-2 text-right'>"+fmtCurrExt+"</div> " +
-			            		"<div class='col-xs-2 text-right "+minusSign+ "'>"+fmProfit+"</div> " +
+			               		"<div class='col-xs-2 text-right'>"+purShares+"</div> " +
+			               		"<div class='col-xs-2 text-right'>"+purPrice+"</div> " +
+			               		"<div class='col-xs-2 text-right'>"+purExt+"</div> " +
+			              		"<div class='col-xs-2 text-right'>"+currExt+"</div> " +
+			            		"<div class='col-xs-2 text-right "+minusSign+ "'>"+profit+"</div> " +
 			           	"</div>" 
 
 			$("."+symbol+"con").append(stockInfo)
@@ -96,53 +105,58 @@ $(document).ready(function() {
 		    for(i=0; i < tickerList.length; i++) {
 		    	subTotal = 0
 		    	subTotal = (currentPrice[i] * companyShares[i]);
-		    	portfolioValue += subTotal
+		    	portfolioValue += subTotal;
+		    	portfolioValue += companyCash[i]
 		    }
-			fmtPortfolioValue = formatNumber(portfolioValue);
-			$(".investmenttotal").text("Portfolio Value: $"+fmtPortfolioValue);
+			portfolioValue = formatNumber(portfolioValue);
+			$(".investmenttotal").text("Portfolio Value: $"+portfolioValue);
 		}
 		
+		// this functiom builds the html code to an accordian panel based on
+		// the stock symbol - when going through the firebase list and we
+		// encounter a stock symbol for the first time, we create div classes
+		// for the create unique panels for the stock to deliver those transactions
+		// for that stock - we create the four unique four id's by combining the
+		// stock symbol as a prefix and the suffix (main, head, detail and panel)
 		function buildStockDisplay(symbol, companyName) {
 
+				// this code builds the main accordian container
 				header = $('<div>')
 				header.addClass("panel panel-default")
 				header.attr('id',symbol+"main");
 				$('#accordion').append(header);
 
+				// this code builds the tab portion of the accordiam for each stock
 				header = $('<div>');
 				header.addClass('panel-heading accordion-toggle.collapsed');
-				//header.attr("role","tab");
 				header.attr("id",symHead);
 				$('#'+symbol+'main').append(header);
 
+				// we are adding a bootstrap element to the header
 				header = $("<H4>");
 				header.addClass('panel-title title');
 				header.attr("id","H4"+symbol);
 				$("#"+symHead).append(header);
 
+				// we are adding an anchor to connect the header to the detail
 				header = $("<a>");
 				header.addClass('accordion-toggle')
-				//header.attr("role","button")
 				header.attr("data-toggle","collapse");
 				header.attr("data-parent", '#'+symHead);
 				header.attr("href", "#"+symDetail);
-				//header.attr("aria-expanded","true");
-				//header.attr("aria-controls","true");
-
 				header.html(symName);
 				$("#H4"+symbol).append(header);
 
+				// now we are setting up the detail section of the panel
 				detail = $('<div>');
 				detail.attr('id',symDetail);
 				detail.addClass('collapse panel-collapse');
-				//detail.attr('role','tabpanel');
-				//detail.attr('aria-labelledby', symHead+'heading')
 				$('#'+symbol+'main').append(detail);
 
+				// we are now adding addition divs to satisfy bootstrap
 				detail = $('<div>');
 				detail.addClass('panel-body body-text');
 				detail.attr('id','text'+symbol);
-				//detail.text('this is where the detail goes');
 				$("#"+symDetail).append(detail);
 
 				// building header for detail section
@@ -161,11 +175,16 @@ $(document).ready(function() {
 				$("#text"+symbol).append(detailHeader);
 			}
 
+			// this function a formatted numbers for displays (result ex: 12,122,23)
 			function formatNumber(number) {
 				newFormat = number.toLocaleString('en',{minimumFractionDigits:2})
 				return newFormat;
 			}
 
+			// this function is only called when we encounter a stock we did not
+			// process before - there is no need to function a second time for a
+			// since all of the information is the same - current price is recorder
+			// for this stock and the news section will be updated in this section
 			function getStocks(q) {
 			    var queryURL = "https://api.iextrading.com/1.0/stock/market/batch?symbols=" + q + "&types=quote,news,chart&range=1m&last=2";
 
@@ -182,7 +201,8 @@ $(document).ready(function() {
 							summary     = response[q].news[i].summary;
 							dateTime    = response[q].news[i].datetime.substring(0,10)
 							url         = response[q].news[i].url;
-							latestPrice = response[q].quote.latestPrice;
+							latestPrice = parseInt(response[q].quote.latestPrice)
+							latestPrice = formatNumber(latestPrice);
 							name        = response[q].quote.companyName;
 
 							newsline = '<div class="news_grid1>"' +
@@ -194,33 +214,33 @@ $(document).ready(function() {
 							$('.news_chart').append(newsline);
 				       } 
 					})
- 						updateTables(latestPrice, q, name)
+ 					updateTables(latestPrice, q, name)
 			}
 
+			// this function captures data to be used to stock information
 			function updateTables(latestPrice, q, name) {
-				// symLoc = $.inArray(q,tickerList);
-				// if(symLoc == '-1') {
-					pos = tickerList.length
-					tickerList.push(q);
-					currentPrice.push(formatNumber(latestPrice));
-					companyNames.push(name);
-					companyShares.push(0);
-					symHead   = q+"head";
-				    symDetail = q+"detail";
-				    symPanel  = q+"panel";
-
+				
+			 	pos = tickerList.length
+				tickerList.push(q);
+				currentPrice.push(latestPrice);
+				companyNames.push(name);
+				companyShares.push(0);
+				companyCash.push(0)
+				symHead   = q+"head";     // used as id for bootstrap classes
+			    symDetail = q+"detail";   // used as id for bootstrap classes
+			    symPanel  = q+"panel";    // used as id for bootstrap classes
 			
-					symName = "<table style:'width:960px;'>"	+
-					          "<tr>" +
-					          "<td style='width:100px'>"+q+"</td>" +
-					          "<td style='width:300px'>"+name+"</td>" +
-					          "<td style='width:200px'>Current Price  $"+currentPrice[pos]+"</td>" +
-					          "<td class='total"+q+"' style='width:200px'></td>" +
-					          "</tr>" +
-					          "</table>"
-
-				    buildStockDisplay(q,symName)
-				//}
+				symName = "<table style:'width:960px;'>"	+
+				          "<tr>" +
+				          "<td style='width:100px'>"+q+"</td>" +
+				          "<td style='width:300px'>"+name+"</td>" +
+				          "<td style='width:200px'>Current Price  $"+currentPrice[pos]+"</td>" +
+				          "<td class='total"+q+"' style='width:200px'></td>" +
+				          "</tr>" +
+				          "</table>"
+					
+			    buildStockDisplay(q,symName)
+				
 			}
 
 })
