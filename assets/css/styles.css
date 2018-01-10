@@ -7,6 +7,10 @@
     color:#fff;
     padding:15px;
 }
+/*signon*/
+#login-alert{
+    display: none;
+}
 /*jumotron image*/
 .jumbotron {
     margin-bottom: 0px;
