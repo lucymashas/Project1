@@ -1,10 +1,8 @@
 $(document).ready(function(){
 	//if user clicks cancel it resets any data entered
-
-
+	
 	$("#cancel").on("click",function(){
 		event.preventDefault();
-		// $(this).parent().find("input").val('');
 		$("#getName").val('');
         $("#searchButton").show();
         $("#cancelBtn").hide();
