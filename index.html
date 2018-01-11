@@ -31,6 +31,7 @@
    messagingSenderId: "883953047486"
  };
  firebase.initializeApp(config);
+
  var database = firebase.database();
 
  $( function() {
@@ -103,25 +104,25 @@
 					<input class="form-control" value="" id="stockName" readonly></input>
 				</div>
 
-				<div class="form-group radio-inline required">
+				<div class="form-group radio-inline" id="transaction">
 					<label>Type of Transaction</label>
-					<input type="radio" name="transaction" value="buy">
+					<input type="radio" name="transaction" value="buy" required>
 					<label class="label2">Purchased</label>
-					<input type="radio" name="transaction" value="sell">
+					<input type="radio" name="transaction" value="sell" required>
 					<label class="label2">Sold</label>
 				</div>
 				
-				<div class="form-group required">
+				<div class="form-group">
 					<label for="sharespurchased" class="col-sm-4">Shares Purchased</label>
 					<input type="number" class="form-control" min="0" id="sharesPurchased" placeholder="Enter Number of Shares Purchased" required></input>
 				</div>
 
-				<div class="form-group required">
+				<div class="form-group">
 					<label for="dateofpurchase" class="col-sm-4">Date of Purchase</label>
 					<input type="text" class="form-control" name="date" id="datepicker" placeholder="MM/DD/YYYY" required></input>
 				</div>
 
-				<div class="form-group required">
+				<div class="form-group">
 					<label for="pricePaid" class="col-sm-4">Enter Price Paid</label>
 					<input type="number" class="form-control" id="pricePaid" min="0.01" step="0.01" max="2500" placeholder="999.99" required>
 				</div>	

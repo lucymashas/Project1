@@ -25,7 +25,13 @@
 	const auth = firebase.auth();
 	// Sign in
 	const promise = auth.signInWithEmailAndPassword(email,pass);
-	promise.catch(e => console.log(e.message));
+		promise.catch(function(error){
+			var errorCode=error.code;
+			var errorMessage = error.message;
+			$("#login-alert").css("display","block");
+			$("#login-alert").append(errorMessage);
+			console.log('Error: ' + errorCode + '--' + errorMessage);
+		});
 	});
 
 	// Add signup event
@@ -36,9 +42,14 @@
 	const auth = firebase.auth();
 	// Sign in
 	const promise = auth.createUserWithEmailAndPassword(email,pass);
-	promise.catch(e =>console.log(e.message));
+		promise.catch(function(error){
+			var errorCode=error.code;
+			var errorMessage = error.message;
+			$("#login-alert").css("display","block");
+			$("#login-alert").append(errorMessage);
+			console.log('Error: ' + errorCode + '--' + errorMessage);
+		});
 	});
-
 	btnLogout.addEventListener('click', e=> {
 		firebase.auth().signOut();
 	});

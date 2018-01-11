@@ -18,7 +18,7 @@ $(document).ready(function() {
     function symbolSearch(nameSearch) {
         lookupResults = "";
         // http works locally, https doesn't work anywhere
-        var symbolUrl = "https://dev.markitondemand.com/Api/v2/Lookup/jsonp";
+        var symbolUrl = "http://dev.markitondemand.com/Api/v2/Lookup/jsonp";
         // var symbolUrl = "https://dev.markitondemand.com/Api/v2/Lookup/jsonp";
         symbolUrl += '?' + $.param({
             'input': nameSearch
@@ -33,10 +33,9 @@ $(document).ready(function() {
         }).done(function(lookupData) {
             $("#lookup").empty();
             opt = $("<select>");
-            opt.attr("id","lookupID")
-            opt.attr("class","form-control")
+            opt.attr({id:"lookupID",class:"form-control"});
             $('#lookup').append(opt)
-    
+            $('#lookupID').append(`<option disabled selected>Select One</option>`);
             for(i=0; i < lookupData.length; i++) {
               opt = $('<option>');
               opt.attr('value',lookupData[i].Symbol);
@@ -44,7 +43,7 @@ $(document).ready(function() {
               $('#lookupID').append(opt);
             }
     //Seclection of item, make form available and add the symbol and name to form
-            $('#lookupID').change(function(event){
+            $('#lookupID').change("click",function(){
                 $("#cancelBtn").show();
                 $("#searchButton").hide();
                 var optionText = $("#lookupID option:selected").text();

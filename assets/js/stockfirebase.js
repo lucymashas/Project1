@@ -77,7 +77,7 @@ $(document).ready(function() {
             	 profit = "";
             	 companyCash[symLoc] += rawPurExt;
             	 totStockValue += companyCash[symLoc]
-            	 console.log(totStockValue)          	 
+            	 // console.log(totStockValue)          	 
             }
                 
             $(".total"+symbol).text("Stock Value  $"+formatNumber(totStockValue));
